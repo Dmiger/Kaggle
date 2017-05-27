@@ -43,14 +43,24 @@ x_asc_df[:53]
 df.columns[df.isnull().any()].tolist()
 
 
-only_missing = x_asc_df.dropna()
-only_missing.describe()
+nuli = x_asc_df[0:51].transpose()
+list_of_nulls = list(nuli.columns.values)
+list_of_nulls
+
+df_null = pd.DataFrame(df[list_of_nulls])
+price = pd.DataFrame(df['price_doc'])
+price_null = pd.concat([price,df_null], axis =1)
+price_null
+
+#cols = price_null.columns.tolist()
+#cols
+#cols.insert(0, cols.pop(cols.index('price_doc')))
+#price_null = price_null.loc[:, cols]
+
+corrmat2 = price_null.corr()
+corrmat2
 
 
-list(df.columns.values)
-
-list(df.dropna(axis = 0, how = 'any'))
-df.dropna(thresh = 260)
-
-
+f, ax = plt.subplots(figsize=(12, 9))
+sns.heatmap(corrmat2,linewidths=.1)
 
